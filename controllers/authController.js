@@ -13,13 +13,6 @@ const bcrypt = require("bcryptjs");
 
 // public
 exports.Signup = asyncHandler(async (req, res) => {
-  const findUserExist = await UserModel.findOne({ email: req.body.email });
-
-  if (findUserExist) {
-    return res
-      .status(401)
-      .json({ success: false, message: " email already exist" });
-  }
   const user = await UserModel.create({
     name: req.body.name,
     email: req.body.email,
