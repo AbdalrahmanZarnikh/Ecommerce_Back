@@ -19,7 +19,7 @@ const GolbalError=require("./middlewares/ErrorMiddleware")
 // This MiddleWare For body parser
 app.use(express.json());
 
-
+// routes
 app.use("/api/auth",AuthRouter);
 
 // This For Connect To Server From any client user 
