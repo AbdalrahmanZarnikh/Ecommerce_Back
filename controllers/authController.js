@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
 const crypto = require("crypto");
-
+const jwt = require("jsonwebtoken");
 const SendEmail = require("../utils/SendEmail");
 
 const UserModel = require("../models/userModel");
@@ -102,6 +102,7 @@ exports.Protect = asyncHandler(async (req, res, next) => {
 
 exports.Allowed = (...roles) => {
   return asyncHandler(async (req, res, next) => {
+   
     if (!roles.includes(req.user.role)) {
       return next(
         new ApiError("you are not allowed to access for this route ", 403)
