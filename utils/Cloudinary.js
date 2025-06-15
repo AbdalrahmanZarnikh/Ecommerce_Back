@@ -35,6 +35,7 @@ exports.RemoveMultipleImagesCloudinary = async (Model, id) => {
     if (doc.images) {
       doc.images.forEach(async (image) => {
         const result = await cloudinary.uploader.destroy(image.public_id);
+        return result;
       });
     }
   } catch (error) {
