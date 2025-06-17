@@ -10,7 +10,7 @@ const UploadMultipleImages = asyncHandler(async (req, res, next) => {
       req.files.images.map(async (Image, index) => {
         const fileName = `image-${Date.now()}-${index}.jpeg`;
 
-        await sharp(image.buffer)
+        await sharp(Image.buffer)
           .resize(400, 400)
           .toFormat("jpeg")
           .jpeg({ quality: 100 })
