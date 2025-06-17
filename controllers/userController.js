@@ -13,15 +13,14 @@ const getUser = asyncHandler(async (req, res) => {
 });
 //create new user
 const createUser = asyncHandler(async (req, res) => {
-  const { name, slug, email, password, role } = req.body;
-  if (!name || !slug || !email || !password || !role) {
+  const { name, email, password, role } = req.body;
+  if (!name  || !email || !password || !role) {
     return res
       .status(400)
       .json({ status: "fail", message: "all fields are required" });
   }
   const user = await User.create({
     name,
-    slug,
     email,
     password,
     role
