@@ -57,10 +57,12 @@ exports.UpdateCategory=asyncHandler(async(req,res,next)=>{
     await RemoveImageCloudinary(CategoryModel,id);
     req.body.image=req.image;
   }
-  else if(req.files){
-    await RemoveMultipleImagesCloudinary(CategoryModel,id);
-    req.body.images=req.images;
-  }
+ 
+    // This For Multiple images when upload 
+  // else if(req.files){
+  //   await RemoveMultipleImagesCloudinary(CategoryModel,id);
+  //   req.body.images=req.images;
+  // }
 
   const categoryUpdated=await CategoryModel.findByIdAndUpdate(id,req.body,{new:true});
 
@@ -79,9 +81,10 @@ exports.DeleteCategory=asyncHandler(async (req,res)=>{
     await RemoveImageCloudinary(CategoryModel,id)
   }
 
-  else if(findDocument.images){
-    await RemoveMultipleImagesCloudinary(CategoryModel,id);
-  }
+  //  This For Multiple images when upload 
+  // else if(findDocument.images){
+  //   await RemoveMultipleImagesCloudinary(CategoryModel,id);
+  // }
 
   const document=await CategoryModel.findByIdAndDelete(id);
 
