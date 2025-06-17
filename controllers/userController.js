@@ -50,7 +50,7 @@ const deleteUser = asyncHandler(async (req, res,next) => {
   if(!user){
     return next(new ApiError("User Not Found!!!",404))
   }
-  res.status(200).json({ status: "success"});
+  res.status(200).json({ status: "success",message:"User Deleted Successfully"});
 });
 // get logged user data
 const getLoggedUserData = asyncHandler(async (req, res) => {
