@@ -1,6 +1,5 @@
 const {UploadImageCloudinary}=require("../utils/Cloudinary")
 
-const fs=require("fs")
 
 const UploadImage= async(req,res,next)=>{
         if(req.file){
@@ -10,7 +9,6 @@ const UploadImage= async(req,res,next)=>{
                     url:result.secure_url,
                     public_id:result.public_id
                 }
-                fs.unlinkSync(req.file.path)
         
 
             } catch (error) {
