@@ -1,6 +1,9 @@
 const User = require("../models/userModel");
 
 const asyncHandler = require("express-async-handler");
+
+const ApiError= require("../utils/ApiError")
+
 //get users
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
@@ -9,19 +12,21 @@ const getUsers = asyncHandler(async (req, res) => {
 //get user
 const getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
+    if(!user){
+    return next(new ApiError("User Not Found!!!",404))
+  }
   res.status(200).json({ status: "success", data: user });
 });
 //create new user
 const createUser = asyncHandler(async (req, res) => {
-  const { name, slug, email, password, role } = req.body;
-  if (!name || !slug || !email || !password || !role) {
-    return res
-      .status(400)
-      .json({ status: "fail", message: "all fields are required" });
-  }
+  const { name, email, password, role } = req.body;
+  // if (!name  || !email || !password || !role) {
+  //   return res
+  //     .status(400)
+  //     .json({ status: "fail", message: "all fields are required" });
+  // }
   const user = await User.create({
     name,
-    slug,
     email,
     password,
     role
@@ -34,12 +39,18 @@ const updateUser = asyncHandler(async (req, res) => {
     new: true,
     runValidators: true,
   });
+    if(!user){
+    return next(new ApiError("User Not Found!!!",404))
+  }
   res.status(200).json({ status: "success", data: user });
 });
 //delete user
-const deleteUser = asyncHandler(async (req, res) => {
+const deleteUser = asyncHandler(async (req, res,next) => {
   const user = await User.findByIdAndDelete(req.params.id);
-  res.status(200).json({ status: "success", data: user });
+  if(!user){
+    return next(new ApiError("User Not Found!!!",404))
+  }
+  res.status(200).json({ status: "success",message:"User Deleted Successfully"});
 });
 // get logged user data
 const getLoggedUserData = asyncHandler(async (req, res) => {

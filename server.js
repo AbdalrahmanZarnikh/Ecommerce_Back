@@ -13,6 +13,8 @@ const ConnectDB=require("./DB/ConnectDB")
 
 const AuthRouter=require("./routes/authRoute");
 const userRoutes = require("./routes/userRoutes")
+const categoryRoutes = require("./routes/categoryRoute");
+const brandRoutes = require("./routes/brandRoute")
 
 // Error MiddleWare
 const GolbalError=require("./middlewares/ErrorMiddleware")
@@ -20,10 +22,11 @@ const GolbalError=require("./middlewares/ErrorMiddleware")
 // This MiddleWare For body parser
 app.use(express.json());
 
-
+// routes
 app.use("/api/auth",AuthRouter);
 app.use("/api/users",userRoutes);
-
+app.use("/api/categories",categoryRoutes);
+app.use("/api/brands" , brandRoutes);
 // This For Connect To Server From any client user 
 app.use(cors({
     origin:"*",
@@ -35,5 +38,5 @@ app.use(GolbalError);
 
 app.listen(process.env.PORT,()=>{
     console.log(`listening on port:${process.env.PORT}....`)
-    ConnectDB();
+    ConnectDB()
 })
