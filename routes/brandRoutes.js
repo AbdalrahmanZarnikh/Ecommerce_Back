@@ -15,7 +15,7 @@ const { upload } = require("../utils/MulterConfig");
 
 const UploadImage = require("../middlewares/UploadImageMiddleware");
 
-router.use();
+
 router
   .route("/")
   .get(getAllBrands)

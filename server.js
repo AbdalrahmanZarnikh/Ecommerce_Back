@@ -15,7 +15,7 @@ const AuthRouter=require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes")
 const categoryRoutes = require("./routes/categoryRoutes")
 const productRoutes = require("./routes/productRoutes")
-
+const brandRoutes=require("./routes/brandRoutes")
 // Error MiddleWare
 const GolbalError=require("./middlewares/ErrorMiddleware")
 
@@ -27,6 +27,7 @@ app.use("/api/auth",AuthRouter);
 app.use("/api/users",userRoutes);
 app.use("/api/categories",categoryRoutes);
 app.use("/api/products",productRoutes);
+app.use("/api/brands" , brandRoutes);
 
 // This For Connect To Server From any client user 
 app.use(cors({
