@@ -11,9 +11,10 @@ const ConnectDB=require("./DB/ConnectDB")
 
 // routes
 
-const AuthRouter=require("./routes/authRoute");
+const AuthRouter=require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes")
-const categoryRoutes = require("./routes/categoryRoute")
+const categoryRoutes = require("./routes/categoryRoutes")
+const productRoutes = require("./routes/productRoutes")
 
 // Error MiddleWare
 const GolbalError=require("./middlewares/ErrorMiddleware")
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api/auth",AuthRouter);
 app.use("/api/users",userRoutes);
 app.use("/api/categories",categoryRoutes);
+app.use("/api/products",productRoutes);
 
 // This For Connect To Server From any client user 
 app.use(cors({

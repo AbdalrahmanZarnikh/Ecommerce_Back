@@ -8,7 +8,7 @@ const {RemoveImageCloudinary,RemoveMultipleImagesCloudinary} =require("../utils/
 
 exports.GetAllCategories = asyncHandler(async (req, res, next) => {
 
-  const countDocuments=CategoryModel.countDocuments();
+  const countDocuments=await CategoryModel.countDocuments();
 
   const features=new ApiFeatures(CategoryModel.find({}),req.query)
 

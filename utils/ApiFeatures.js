@@ -72,6 +72,7 @@ class ApiFeatures {
     const page=this.queryString.page*1 ||1;
     const limit =this.queryString.limit*1 ||50;
 
+
     const skip =(page -1 )*limit;
 
     const endIndexInPage=page * limit;
@@ -82,7 +83,8 @@ class ApiFeatures {
 
     pagination.limit=limit;
 
-    pagination.numberOfPages=Math.ceil(countDocuments/limit);
+  
+    pagination.numberOfPages=Math.ceil(countDocuments/limit)
 
     // nextPage
     if(endIndexInPage < countDocuments){

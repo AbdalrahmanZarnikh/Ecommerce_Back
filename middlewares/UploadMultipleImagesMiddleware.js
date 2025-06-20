@@ -1,24 +1,15 @@
 const asyncHandler = require("express-async-handler");
-const sharp = require("sharp");
 
-const { UploadImageCloudinary } = require("cloudinary");
+const { UploadImageCloudinary } = require("../utils/Cloudinary");
 
 const UploadMultipleImages = asyncHandler(async (req, res, next) => {
-  req.body.images = [];
+  if(req.files){
+     req.body.images = [];
   if (req.files.images) {
     await Promise.all(
-      req.files.images.map(async (Image, index) => {
-        const fileName = `image-${Date.now()}-${index}.jpeg`;
+      req.files.images.map(async (Image) => {
 
-        await sharp(Image.buffer)
-          .resize(400, 400)
-          .toFormat("jpeg")
-          .jpeg({ quality: 100 })
-          .toFile("uploads/product");
-
-        const result = await UploadImageCloudinary(
-          `./uploads/product/${fileName}`
-        );
+        const result = await UploadImageCloudinary(Image.path);
 
         req.body.images.push({
           url: result.secure_url,
@@ -27,7 +18,9 @@ const UploadMultipleImages = asyncHandler(async (req, res, next) => {
       })
     );
   }
-  next();
+}
+next();
+
 });
 
 module.exports = UploadMultipleImages;
