@@ -12,6 +12,8 @@ const {
 
 const {upload } = require("../utils/MulterConfig");
 
+const {createCategoryValidator,getCategoryValidator,updateCategoryValidator,deleteCategoryValidator} =require("../utils/validators/categoryValidator")
+
 const UploadImage = require("../middlewares/UploadImageMiddleware");
 
 router
@@ -22,6 +24,7 @@ router
     Allowed("admin"),
     upload.single("image"),
     UploadImage,
+    createCategoryValidator,
     CreateCategory
   );
 
@@ -32,9 +35,10 @@ router
     Allowed("admin"),
     upload.single("image"),
     UploadImage,
+    updateCategoryValidator,
     UpdateCategory
   )
-  .get(GetOneCategory)
-  .delete(Protect, Allowed("admin"), DeleteCategory);
+  .get(getCategoryValidator,GetOneCategory)
+  .delete(Protect, Allowed("admin"),deleteCategoryValidator, DeleteCategory);
 
 module.exports = router;

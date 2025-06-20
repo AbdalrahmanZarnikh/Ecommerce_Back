@@ -1,7 +1,10 @@
 const { check } = require("express-validator");
+
+const validatorMiddleware = require("../../middlewares/validatorMiddleware");
+
 const { default: slugify } = require("slugify");
 const UserModel = require("../../models/userModel");
-const validatorMiddleware = require("../../middlewares/ValidatorMiddleware");
+
 
 exports.signupValidator = [
   check("name")
@@ -13,6 +16,7 @@ exports.signupValidator = [
     req.body.slug = slugify(val);
     return true;
   }),
+
   check("email")
     .notEmpty()
     .withMessage("Please enter a valid email address")

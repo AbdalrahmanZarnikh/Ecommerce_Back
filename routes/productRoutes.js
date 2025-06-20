@@ -10,6 +10,7 @@ const {
   GetOneProduct,
 } = require("../controllers/productController");
 
+const {createProductValidator,updateProductValidator,getProductValidator,deleteProductValidator}= require("../utils/validators/productValidator")
 
 
 const {upload} =require("../utils/MulterConfig")
@@ -36,6 +37,7 @@ router
     ]),
     UploadImage,
     UploadMultipleImages,
+    createProductValidator,
     CreateProduct
   );
 
@@ -56,9 +58,10 @@ router
     ]),
     UploadImage,
     UploadMultipleImages,
+    updateProductValidator,
     UpdateProduct
   )
-  .get(GetOneProduct)
-  .delete(Protect, Allowed("admin"), DeleteProduct);
+  .get(getProductValidator,GetOneProduct)
+  .delete(Protect, Allowed("admin"),deleteProductValidator, DeleteProduct);
 
 module.exports = router;
