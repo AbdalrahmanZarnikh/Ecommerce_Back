@@ -62,7 +62,6 @@ const createProductValidator = [
     .isArray()
     .withMessage("colors should br array of string"),
 
-  check("image").notEmpty().withMessage("Product image is required"),
 
   check("images")
     .optional()
