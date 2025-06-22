@@ -11,7 +11,7 @@ const getCoupons = asyncHandler(async(req, res, next) => {
       features
         .Paginate(countDocuments)
         .Filter()
-        .Search("brand")
+        .Search("coupon")
         .LimitFields()
         .Sort();
     
