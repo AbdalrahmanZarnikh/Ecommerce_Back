@@ -71,7 +71,7 @@ const deleteBrand = asyncHandler(async (req, res, next) => {
   if (!brand) {
     res.status(404).json({ status: "Fail", message: "Brand Not Found" });
   }
-  res.status(200).json({ status: "Success", data: brand });
+  res.status(200).json({ status: "Success", message: "Brand deleted successfully" });
 });
 module.exports = {
   getAllBrands,
