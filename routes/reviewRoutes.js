@@ -4,6 +4,14 @@ const router = express.Router();
 
 const { Allowed, Protect } = require("../controllers/authController");
 
+
+const {
+  createReviewValidator,
+  getReviewValidator,
+  updateReviewValidator,
+  deleteReviewValidator
+} = require("../utils/validators/reviewValidator")
+
 const {
   getReviews,
   getReview,
@@ -14,12 +22,13 @@ const {
 router
   .route("/")
   .get(getReviews)
-  .post(Protect, Allowed("user", "admin"), createReview);
+  .post(Protect, Allowed("user", "admin"), 
+  createReviewValidator,createReview);
 
 router
   .route("/:id")
-  .get(getReview)
-  .put(Protect, Allowed("user", "admin"), updateReview)
-  .delete(Protect, Allowed("admin"), deleteReview);
+  .get(getReviewValidator,getReview)
+  .put(Protect, Allowed("user", "admin"),updateReviewValidator ,updateReview)
+  .delete(Protect, Allowed("admin"), deleteReviewValidator,deleteReview);
   
 module.exports = router;
