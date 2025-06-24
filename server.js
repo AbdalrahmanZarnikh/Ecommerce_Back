@@ -21,6 +21,7 @@ const couponRoutes = require("./routes/couponRoutes")
 const addressRoutes = require("./routes/addressRoutes")
 const cartRoutes=require("./routes/cartRoutes")
 
+const reviewRoutes = require("./routes/reviewRoutes");
 // Error MiddleWare
 const GolbalError=require("./middlewares/ErrorMiddleware")
 
@@ -36,7 +37,11 @@ app.use("/api/brands" , brandRoutes);
 app.use("/api/wishlists" ,wishlistRoutes);
 app.use("/api/coupons", couponRoutes);
 app.use("/api/addresses", addressRoutes);
+<<<<<<< HEAD
 app.use("/api/cart", cartRoutes);
+=======
+app.use("/api/reviews", reviewRoutes);
+>>>>>>> origin/ahmad
 
 // This For Connect To Server From any client user 
 app.use(cors({
