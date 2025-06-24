@@ -32,6 +32,8 @@ const getCoupon = asyncHandler(async(req, res, next) => {
     }
     res.status(200).json({status: "success" , data: coupon});
 });
+
+
 const createCoupon = asyncHandler(async(req , res, next)=>{
     const coupon = await couponModel.create(req.body);
     res.status(201).json({status: "success" , data: coupon});
