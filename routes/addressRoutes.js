@@ -8,7 +8,7 @@ const {
 AddAddress,
 RemoveAddress,
 GetLoggedUserAddresses
-} = require("../controllers/addressControllers");
+} = require("../controllers/addressController");
 
 router.delete("/:addressId", Protect, RemoveAddress);
 

@@ -10,10 +10,14 @@ const UploadImage = async (req, res, next) => {
         result = await UploadImageCloudinary(req.file.path);
       }
 
+    
+
       req.image = {
         url: result.secure_url,
         public_id: result.public_id,
       };
+
+      console.log(req.image)
     } catch (error) {
       console.log(error);
     }

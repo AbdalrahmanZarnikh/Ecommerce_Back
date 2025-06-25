@@ -11,10 +11,10 @@ const {
 } = require("../controllers/categoryController");
 
 const {upload } = require("../utils/MulterConfig");
+const UploadImage = require("../middlewares/UploadImageMiddleware");
 
 const {createCategoryValidator,getCategoryValidator,updateCategoryValidator,deleteCategoryValidator} =require("../utils/validators/categoryValidator")
 
-const UploadImage = require("../middlewares/UploadImageMiddleware");
 
 router
   .route("/")
