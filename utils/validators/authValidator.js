@@ -1,6 +1,6 @@
 const { check } = require("express-validator");
 
-const validatorMiddleware = require("../../middlewares/validatorMiddleware");
+const validatorMiddleware = require("../../middlewares/ValidatorMiddleware");
 
 const { default: slugify } = require("slugify");
 const UserModel = require("../../models/userModel");
@@ -43,6 +43,6 @@ exports.signupValidator = [
     }),
   check("confirmPassword").notEmpty().withMessage("password confirm required"),
 
-  validatorMiddleware,
+  validatorMiddleware
 ];
 
