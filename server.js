@@ -23,6 +23,16 @@ const cartRoutes=require("./routes/cartRoutes")
 const reviewRoutes = require("./routes/reviewRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 
+app.use(cors());
+
+
+
+app.use(cors({
+    origin:"*",
+    methods:["GET","POST","DELETE","PUT"],
+    
+}))
+
 // Error MiddleWare
 const GolbalError=require("./middlewares/ErrorMiddleware")
 
@@ -42,10 +52,6 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/orders", orderRoutes);
 
-app.use(cors({
-    origin:"*",
-    methods:["GET","POST","DELETE","PUT"],
-}))
 
 // Error MiddleWare
 app.use(GolbalError);
