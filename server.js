@@ -23,7 +23,6 @@ const cartRoutes=require("./routes/cartRoutes")
 const reviewRoutes = require("./routes/reviewRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 
-app.use(cors());
 
 
 
