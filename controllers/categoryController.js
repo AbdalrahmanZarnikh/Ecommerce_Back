@@ -4,7 +4,8 @@ const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/ApiError");
 const ApiFeatures=require("../utils/ApiFeatures");
 
-const {RemoveImageCloudinary,RemoveMultipleImagesCloudinary} =require("../utils/Cloudinary")
+const {RemoveImageCloudinary,RemoveMultipleImagesCloudinary} =require("../utils/Cloudinary");
+const ProductModel = require("../models/productModel");
 
 exports.GetAllCategories = asyncHandler(async (req, res, next) => {
 
@@ -82,12 +83,13 @@ exports.DeleteCategory=asyncHandler(async (req,res)=>{
   // }
 
   const document=await CategoryModel.findByIdAndDelete(id);
-
+   
      if (!document) {
       return res
         .status(404)
         .json({ status: "Fail", message: "Document not found" });
     }
+    await ProductModel.deleteMany({category:id});
     res
       .status(200)
       .json({ status: "Success", message: "Document deleted successfully" });

@@ -7,6 +7,7 @@ const {
   RemoveImageCloudinary,
   RemoveMultipleImagesCloudinary,
 } = require("../utils/Cloudinary");
+const ProductModel = require("../models/productModel");
 
 const getAllBrands = asyncHandler(async (req, res, next) => {
   const countDocuments = await Brand.countDocuments();
@@ -70,6 +71,7 @@ const deleteBrand = asyncHandler(async (req, res, next) => {
   if (!brand) {
     res.status(404).json({ status: "Fail", message: "Brand Not Found" });
   }
+  await ProductModel.deleteMany({brand:id});
   res
     .status(200)
     .json({ status: "Success", message: "Brand deleted successfully" });
