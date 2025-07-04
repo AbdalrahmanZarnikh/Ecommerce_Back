@@ -71,7 +71,7 @@ const deleteBrand = asyncHandler(async (req, res, next) => {
   if (!brand) {
     res.status(404).json({ status: "Fail", message: "Brand Not Found" });
   }
-  await ProductModel.deleteMany({brand:id});
+  await ProductModel.deleteMany({brand:req.params.id});
   res
     .status(200)
     .json({ status: "Success", message: "Brand deleted successfully" });
