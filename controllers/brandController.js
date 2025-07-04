@@ -9,7 +9,7 @@ const {
 } = require("../utils/Cloudinary");
 
 const getAllBrands = asyncHandler(async (req, res, next) => {
-  const countDocuments =await  Brand.countDocuments();
+  const countDocuments = await Brand.countDocuments();
 
   const features = new ApiFeatures(Brand.find({}), req.query);
 
@@ -49,7 +49,7 @@ const createBrand = asyncHandler(async (req, res, next) => {
 
 const updateBrand = asyncHandler(async (req, res, next) => {
   if (req.image) {
-    await RemoveImageCloudinary(brand, req.params.id);
+    await RemoveImageCloudinary(Brand, req.params.id);
     req.body.image = req.image;
   }
   const brand = await Brand.findByIdAndUpdate(req.params.id, req.body, {
@@ -62,7 +62,6 @@ const updateBrand = asyncHandler(async (req, res, next) => {
 });
 
 const deleteBrand = asyncHandler(async (req, res, next) => {
-
   if (Brand.findById(req.params.id)) {
     await RemoveImageCloudinary(Brand, req.params.id);
   }
@@ -71,7 +70,9 @@ const deleteBrand = asyncHandler(async (req, res, next) => {
   if (!brand) {
     res.status(404).json({ status: "Fail", message: "Brand Not Found" });
   }
-  res.status(200).json({ status: "Success", message: "Brand deleted successfully" });
+  res
+    .status(200)
+    .json({ status: "Success", message: "Brand deleted successfully" });
 });
 module.exports = {
   getAllBrands,
