@@ -76,6 +76,7 @@ const productSchema = new mongoose.Schema(
 
 productSchema.pre(/^find/, function (next) {
   this.populate({ path: "category" ,select:"name _id "});
+  this.populate({ path: "brand" ,select:"name _id "});
   this.populate({path:"reviews",select:"-_id -product -__v "})
   next();
 });
