@@ -58,11 +58,6 @@ exports.UpdateCategory=asyncHandler(async(req,res,next)=>{
     req.body.image=req.image;
   }
  
-    // This For Multiple images when upload 
-  // else if(req.files){
-  //   await RemoveMultipleImagesCloudinary(CategoryModel,id);
-  //   req.body.images=req.images;
-  // }
 
   const categoryUpdated=await CategoryModel.findByIdAndUpdate(id,req.body,{new:true});
 
