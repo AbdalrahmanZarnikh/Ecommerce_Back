@@ -34,10 +34,6 @@ exports.GetAllProducts = asyncHandler(async (req, res, next) => {
 exports.GetOneProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  if(req.images){
-    req.body.images=req.images;
-  }
-
   const product = await ProductModel.findById(id);
 
   if (!product) {
