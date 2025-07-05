@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const { UploadImageCloudinary } = require("../utils/Cloudinary");
 
 const UploadMultipleImages = asyncHandler(async (req, res, next) => {
-  if (req.files.images) {
+  if (req.files?.images) {
     req.images = [];
     await Promise.all(
       req.files.images.map(async (Image) => {
