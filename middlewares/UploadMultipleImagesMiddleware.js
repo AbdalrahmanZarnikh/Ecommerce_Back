@@ -11,7 +11,7 @@ const UploadMultipleImages = asyncHandler(async (req, res, next) => {
 
         const result = await UploadImageCloudinary(Image.path);
 
-        req.body.images.push({
+        req.images.push({
           url: result.secure_url,
           public_id: result.public_id,
         });
