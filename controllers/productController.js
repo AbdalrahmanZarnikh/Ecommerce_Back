@@ -1,4 +1,3 @@
-
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/ApiError");
 const ApiFeatures = require("../utils/ApiFeatures");
@@ -10,8 +9,7 @@ const {
 const ProductModel = require("../models/productModel");
 
 exports.GetAllProducts = asyncHandler(async (req, res, next) => {
-
-  const countDocuments =await  ProductModel.countDocuments();
+  const countDocuments = await ProductModel.countDocuments();
 
   const features = new ApiFeatures(ProductModel.find({}), req.query);
 
@@ -61,10 +59,12 @@ exports.CreateProduct = asyncHandler(async (req, res) => {
 exports.UpdateProduct = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
-  if (req.file) {
+  if (req.files?.image) {
     await RemoveImageCloudinary(ProductModel, id);
     req.body.image = req.image;
-  } else if (req.files) {
+  }
+
+  if (req.files?.images) {
     await RemoveMultipleImagesCloudinary(ProductModel, id);
     req.body.images = req.images;
   }
