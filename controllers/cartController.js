@@ -18,49 +18,28 @@ const calcTotalCartPrice = (cart) => {
 
 exports.AddProductToCart = asyncHandler(async (req, res, next) => {
   const { productId, color } = req.body;
-
   const product = await ProductModel.findById(productId);
-
   let cart = await CartModel.findOne({ user: req.user._id });
-
   if (!cart) {
     cart = await CartModel.create({
       user: req.user._id,
-      cartItems: [
-        {
-          product: productId,
-          color,
-          price: product.price,
-        },
-      ],
+      cartItems: [{ product: productId, color, price: product.price }],
     });
   } else {
     const productIndex = cart.cartItems.findIndex(
-      (item) => item.product?.toString() == productId && item.color == color
+      (item) => item.product?._id.toString() == productId && item.color == color
     );
-
     if (productIndex > -1) {
       const cartItem = cart.cartItems[productIndex];
-
       cartItem.quantity += 1;
       cart.cartItems[productIndex] = cartItem;
     } else {
-      cart.cartItems.push({
-        product: productId,
-        color,
-        price: product.price,
-      });
+      cart.cartItems.push({ product: productId, color, price: product.price });
     }
   }
-
   calcTotalCartPrice(cart);
-
   await cart.save();
-
-  res.status(200).json({
-    status: "Success",
-    data: cart,
-  });
+  res.status(200).json({ status: "Success", data: cart });
 });
 
 exports.GetLoggedUserCart = asyncHandler(async (req, res, next) => {
@@ -121,20 +100,17 @@ exports.UpdateCartItemQuantity = asyncHandler(async (req, res, next) => {
   }
 
   const itemIndex = cart.cartItems.findIndex(
-      (item) => item._id.toString() == req.params.itemId 
-    );
+    (item) => item._id.toString() == req.params.itemId
+  );
 
-
-    console.log(itemIndex);
-
+  console.log(itemIndex);
 
   if (itemIndex > -1) {
     const cartItem = cart.cartItems[itemIndex];
 
     cartItem.quantity = quantity;
     cart.cartItems[itemIndex] = cartItem;
-  } 
-  else {
+  } else {
     return next(new ApiError("there is no item for this id ", 404));
   }
 
@@ -159,8 +135,7 @@ exports.ApplyCoupon = asyncHandler(async (req, res, next) => {
     return next(new ApiError("Coupon Is Invalid Or Expired"));
   }
 
-  console.log("hellooooo ")
-
+  console.log("hellooooo ");
 
   const cart = await CartModel.findOne({ user: req.user._id });
 
