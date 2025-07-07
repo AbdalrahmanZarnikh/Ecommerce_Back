@@ -106,6 +106,7 @@ exports.DeleteProduct = asyncHandler(async (req, res) => {
     { wishlist: productId },
     { $pull: { wishlist: productId } }
   );
+  
 
   res
     .status(200)
