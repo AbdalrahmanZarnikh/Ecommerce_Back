@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 
 
 const UserModel = require("../models/userModel");
+const ProductModel = require("../models/productModel");
 
 exports.AddProductToWishlist = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findOneAndUpdate(req.user._id, {
@@ -35,6 +36,8 @@ exports.RemoveProductFromWishlist=asyncHandler(async (req,res,next)=>{
 
 exports.GetLoggedUserWishlist=asyncHandler(async (req,res,next)=>{
     const user= await UserModel.findById(req.user._id).populate("wishlist");
+     
+
 
     res.status(200).json({
         status:"Success",

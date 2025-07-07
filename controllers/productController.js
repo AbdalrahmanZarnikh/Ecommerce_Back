@@ -7,6 +7,7 @@ const {
   RemoveMultipleImagesCloudinary,
 } = require("../utils/Cloudinary");
 const ProductModel = require("../models/productModel");
+const UserModel = require("../models/userModel");
 
 exports.GetAllProducts = asyncHandler(async (req, res, next) => {
   const countDocuments = await ProductModel.countDocuments();
@@ -100,6 +101,12 @@ exports.DeleteProduct = asyncHandler(async (req, res) => {
       .status(404)
       .json({ status: "Fail", message: "Document not found" });
   }
+
+  await UserModel.updateMany(
+    { wishlist: productId },
+    { $pull: { wishlist: productId } }
+  );
+
   res
     .status(200)
     .json({ status: "Success", message: "Document deleted successfully" });
