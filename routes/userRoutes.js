@@ -23,17 +23,6 @@ const {
   deleteLoggedUserData,
 } = require("../controllers/userController");
 
-//for admin
-router.get("/", Protect, Allowed("admin"),getUsers);
-
-router.get("/:id", Protect, Allowed("admin"),getUserValidator, getUser);
-
-router.post("/", Protect, Allowed("admin"),createUserValidator,createUser);
-
-router.put("/:id", Protect, Allowed("admin"),updateUserFromAdmin, updateUser);
-
-router.delete("/:id", Protect, Allowed("admin"),deleteUserValidator, deleteUser);
-
 //for users
 router.get("/get-me", getLoggedUserData);
 
@@ -58,4 +47,22 @@ router.delete(
   Allowed("user", "admin"),
   deleteLoggedUserData
 );
+
+//for admin
+router.get("/", Protect, Allowed("admin"), getUsers);
+
+router.get("/:id", Protect, Allowed("admin"), getUserValidator, getUser);
+
+router.post("/", Protect, Allowed("admin"), createUserValidator, createUser);
+
+router.put("/:id", Protect, Allowed("admin"), updateUserFromAdmin, updateUser);
+
+router.delete(
+  "/:id",
+  Protect,
+  Allowed("admin"),
+  deleteUserValidator,
+  deleteUser
+);
+
 module.exports = router;

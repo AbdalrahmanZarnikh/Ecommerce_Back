@@ -52,11 +52,14 @@ const deleteUser = asyncHandler(async (req, res,next) => {
   }
   res.status(200).json({ status: "success",message:"User Deleted Successfully"});
 });
+
+
 // get logged user data
 const getLoggedUserData = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   res.status(200).json({ status: "success", data: user });
 });
+
 //update logged user password
 const updateLoggedUserPassword = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(req.user._id, req.body.password, {
@@ -65,6 +68,7 @@ const updateLoggedUserPassword = asyncHandler(async (req, res) => {
   });
   res.status(200).json({ status: "success", data: user });
 });
+
 //update logged user data (without password and role)
 const updateLoggedUserData = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(req.user._id, req.body, {
@@ -73,11 +77,13 @@ const updateLoggedUserData = asyncHandler(async (req, res) => {
   });
   res.status(200).json({ status: "success", data: user });
 });
+
 //delete logged user data
 const deleteLoggedUserData = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndDelete(req.user._id);
   res.status(200).json({ status: "success", data: user });
 });
+
 module.exports = {
   getUsers,
   getUser,
