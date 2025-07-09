@@ -5,7 +5,7 @@ const GlobalError=(err,req,res,next)=>{
  res.status(err.statusCode).json({
     statusText:err.statusText,
     error:err,
-    messgae:err.message
+    message:err.message
  })
 }
 
