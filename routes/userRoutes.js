@@ -24,7 +24,7 @@ const {
 } = require("../controllers/userController");
 
 //for users
-router.get("/get-me", getLoggedUserData);
+router.get("/get-me",Protect, getLoggedUserData);
 
 router.put(
   "/update-mypassword",
