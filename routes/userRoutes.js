@@ -30,7 +30,6 @@ router.put(
   "/update-mypassword",
   Protect,
   Allowed("user", "admin"),
-  updateUserProfileValidator,
   updateLoggedUserPassword
 );
 
