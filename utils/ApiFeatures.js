@@ -37,6 +37,8 @@ class ApiFeatures {
             query.$or = [
           { paymentMethod: { $regex: this.queryString.keyword, $options: "i" } },
           { hawalaCompany: { $regex: this.queryString.keyword, $options: "i" } },  
+          { user: { $regex: this.queryString.keyword, $options: "i" } },  
+
         ];
       }
       else{
