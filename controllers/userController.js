@@ -2,18 +2,37 @@ const User = require("../models/userModel");
 
 const asyncHandler = require("express-async-handler");
 
-const ApiError= require("../utils/ApiError")
+const ApiError = require("../utils/ApiError");
+const ApiFeatures = require("../utils/ApiFeatures");
 
 //get users
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find();
-  res.status(200).json({ status: "success", data: users });
+  const countDocuments = await User.countDocuments();
+
+  const features = new ApiFeatures(User.find({}), req.query);
+
+  features
+    .Filter()
+    .Search("UserModel")
+    .Paginate(countDocuments)
+    .LimitFields()
+    .Sort();
+
+  const { mongooseQuery, pagination } = features;
+
+  const users = await mongooseQuery;
+
+  if (!users) {
+    return next(new ApiError("users Not Found !!", 404));
+  }
+
+  res.status(200).json({ status: "Success", pagination, data: users });
 });
 //get user
 const getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-    if(!user){
-    return next(new ApiError("User Not Found!!!",404))
+  if (!user) {
+    return next(new ApiError("User Not Found!!!", 404));
   }
   res.status(200).json({ status: "success", data: user });
 });
@@ -29,7 +48,7 @@ const createUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    role
+    role,
   });
   res.status(201).json({ status: "success", data: user });
 });
@@ -39,20 +58,21 @@ const updateUser = asyncHandler(async (req, res) => {
     new: true,
     runValidators: true,
   });
-    if(!user){
-    return next(new ApiError("User Not Found!!!",404))
+  if (!user) {
+    return next(new ApiError("User Not Found!!!", 404));
   }
   res.status(200).json({ status: "success", data: user });
 });
 //delete user
-const deleteUser = asyncHandler(async (req, res,next) => {
+const deleteUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndDelete(req.params.id);
-  if(!user){
-    return next(new ApiError("User Not Found!!!",404))
+  if (!user) {
+    return next(new ApiError("User Not Found!!!", 404));
   }
-  res.status(200).json({ status: "success",message:"User Deleted Successfully"});
+  res
+    .status(200)
+    .json({ status: "success", message: "User Deleted Successfully" });
 });
-
 
 // get logged user data
 const getLoggedUserData = asyncHandler(async (req, res) => {
