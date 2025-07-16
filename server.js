@@ -22,6 +22,7 @@ const addressRoutes = require("./routes/addressRoutes")
 const cartRoutes=require("./routes/cartRoutes")
 const reviewRoutes = require("./routes/reviewRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 
 
@@ -50,6 +51,7 @@ app.use("/api/addresses", addressRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/messages", messageRoutes);
 
 
 // Error MiddleWare
