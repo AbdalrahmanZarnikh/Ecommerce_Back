@@ -13,7 +13,7 @@ GetAllMessages
 
 router
   .route("/")
-  .get(Protect,Allowed("admin"),GetAllCategories)
+  .get(Protect,Allowed("admin"),GetAllMessages)
   .post(
     Protect,
     CreateMessage
