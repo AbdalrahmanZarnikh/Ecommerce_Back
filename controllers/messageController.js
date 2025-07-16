@@ -28,7 +28,10 @@ exports.GetAllMessages = asyncHandler(async (req, res, next) => {
 
 
 exports.CreateMessage=asyncHandler(async(req,res,next)=>{
-  const message=await MessageModel.create(req.body);
+  const message=await MessageModel.create({
+    user:req.user,
+    message:req.body.message
+  });
   res.status(201).json({status:"Success",data:message});
 })
 
