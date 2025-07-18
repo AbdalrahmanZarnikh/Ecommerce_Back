@@ -43,9 +43,19 @@ exports.RemoveProductFromWishlist = asyncHandler(async (req, res, next) => {
 exports.GetLoggedUserWishlist = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findById(req.user._id).populate("wishlist");
 
+  const validWishlist = user.wishlist.filter(product => product !== null);
+
+  const cleanedWishlistIds = validWishlist.map(product => product._id);
+
+  if (cleanedWishlistIds.length !== user.wishlist.length) {
+    user.wishlist = cleanedWishlistIds;
+    await user.save();
+  }
+
   res.status(200).json({
     status: "Success",
-    result: user.wishlist.length,
-    data: user.wishlist,
+    result: validWishlist.length,
+    data: validWishlist,
   });
 });
+
