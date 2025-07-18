@@ -42,19 +42,11 @@ exports.RemoveProductFromWishlist = asyncHandler(async (req, res, next) => {
     { new: true }
   );
 
-  const wishlistWithProducts = await Promise.all(
-    user.wishlist.map(async (id) => {
-      const product = await ProductModel.findById(id);
-      return product ? id : null;
-    })
-  );
-
-  const CorrectWishlist = wishlistWithProducts.filter((id) => id !== null);
 
   res.status(200).json({
     status: "success",
     message: "Product Romoved Successfully From Wishlist",
-    data: CorrectWishlist,
+    data: user.wishlist,
   });
 });
 
