@@ -17,19 +17,19 @@ exports.AddProductToWishlist = asyncHandler(async (req, res, next) => {
     { new: true }
   );
 
-  const validWishlist = user.wishlist.filter((product) => product !== null);
+  const wishlistWithProducts = await Promise.all(
+    user.wishlist.map(async (id) => {
+      const product = await ProductModel.findById(id);
+      return product ? id : null;
+    })
+  );
 
-  const cleanedWishlistIds = validWishlist.map((product) => product._id);
-
-  if (cleanedWishlistIds.length !== user.wishlist.length) {
-    user.wishlist = cleanedWishlistIds;
-    await user.save();
-  }
+  const CorrectWishlist = wishlistWithProducts.filter((id) => id !== null);
 
   res.status(200).json({
     status: "Success",
     message: "Product Added Successfully To Wishlist ",
-    data: validWishlist,
+    data: CorrectWishlist,
   });
 });
 
@@ -42,37 +42,28 @@ exports.RemoveProductFromWishlist = asyncHandler(async (req, res, next) => {
     { new: true }
   );
 
-  const validWishlist = user.wishlist.filter((product) => product !== null);
+  const wishlistWithProducts = await Promise.all(
+    user.wishlist.map(async (id) => {
+      const product = await ProductModel.findById(id);
+      return product ? id : null;
+    })
+  );
 
-  const cleanedWishlistIds = validWishlist.map((product) => product._id);
-
-  if (cleanedWishlistIds.length !== user.wishlist.length) {
-    user.wishlist = cleanedWishlistIds;
-    await user.save();
-  }
+  const CorrectWishlist = wishlistWithProducts.filter((id) => id !== null);
 
   res.status(200).json({
     status: "success",
     message: "Product Romoved Successfully From Wishlist",
-    data: validWishlist,
+    data: user.wishlist,
   });
 });
 
 exports.GetLoggedUserWishlist = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findById(req.user._id).populate("wishlist");
 
-  const validWishlist = user.wishlist.filter((product) => product !== null);
-
-  const cleanedWishlistIds = validWishlist.map((product) => product._id);
-
-  if (cleanedWishlistIds.length !== user.wishlist.length) {
-    user.wishlist = cleanedWishlistIds;
-    await user.save();
-  }
-
   res.status(200).json({
     status: "Success",
-    result: validWishlist.length,
-    data: validWishlist,
+    result: user.wishlist.length,
+    data: user.wishlist,
   });
 });
