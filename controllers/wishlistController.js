@@ -24,9 +24,7 @@ exports.AddProductToWishlist = asyncHandler(async (req, res, next) => {
     })
   );
 
-  const CorrectWishlist = wishlistWithProducts.filter((id) => id !== null);
-
-  user.wishlist=CorrectWishlist
+  user.wishlist = wishlistWithProducts.filter((id) => id !== null);
 
   await user.save();
 
@@ -39,17 +37,30 @@ exports.AddProductToWishlist = asyncHandler(async (req, res, next) => {
 
 exports.RemoveProductFromWishlist = asyncHandler(async (req, res, next) => {
   const user = await UserModel.findOneAndUpdate(
-    req.user._id,
+    { _id: req.user._id },
     {
       $pull: { wishlist: req.params.productId },
     },
     { new: true }
   );
 
+  if (!user) {
+    return next(new Error("User not found"));
+  }
+
+  const wishlistWithProducts = await Promise.all(
+    user.wishlist.map(async (id) => {
+      const product = await ProductModel.findById(id);
+      return product ? id : null;
+    })
+  );
+
+  user.wishlist = wishlistWithProducts.filter((id) => id !== null);
+  await user.save();
 
   res.status(200).json({
     status: "success",
-    message: "Product Romoved Successfully From Wishlist",
+    message: "Product removed successfully from wishlist",
     data: user.wishlist,
   });
 });
