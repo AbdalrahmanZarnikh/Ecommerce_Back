@@ -26,10 +26,14 @@ exports.AddProductToWishlist = asyncHandler(async (req, res, next) => {
 
   const CorrectWishlist = wishlistWithProducts.filter((id) => id !== null);
 
+  user.wishlist=CorrectWishlist
+
+  await user.save();
+
   res.status(200).json({
     status: "Success",
     message: "Product Added Successfully To Wishlist ",
-    data: CorrectWishlist,
+    data: user.wishlist,
   });
 });
 
