@@ -26,6 +26,8 @@ exports.AddProductToWishlist = asyncHandler(async (req, res, next) => {
     })
   );
 
+  console.log("hello ");
+
   user.wishlist = validProductIds.filter((id) => id !== null);
   await user.save();
 

@@ -29,6 +29,6 @@ router
   .route("/:id")
   .get(getReviewValidator,getReview)
   .put(Protect, Allowed("user", "admin"),updateReviewValidator ,updateReview)
-  .delete(Protect, Allowed("admin"), deleteReviewValidator,deleteReview);
+  .delete(Protect, Allowed("admin","user"), deleteReviewValidator,deleteReview);
   
 module.exports = router;
