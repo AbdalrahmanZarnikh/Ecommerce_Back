@@ -17,7 +17,6 @@ const UploadImage = async (req, res, next) => {
         public_id: result.public_id,
       };
 
-      console.log(req.image)
     } catch (error) {
       console.log(error);
     }
