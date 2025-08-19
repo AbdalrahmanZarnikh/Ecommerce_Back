@@ -22,8 +22,9 @@ const reviewSchema = mongoose.Schema(
       ref: "Product",
       required: [true, "Review must be long to product"],
     },
-  },
-  { timestamps: true }
+  },{
+   timestamps:true
+  }
 );
 
 reviewSchema.pre(/^find/, function (next) {
