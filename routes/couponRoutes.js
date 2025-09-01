@@ -12,10 +12,10 @@ const {
   deleteCoupon,
 } = require("../controllers/couponController");
 
-router.route("/").get(Protect, Allowed("admin"), getCoupons)
+router.route("/").get(Protect, getCoupons)
 .post(Protect, Allowed("admin"), createCoupon);
 
-router.route("/:id").get(Protect, Allowed("admin"), getCoupon)
+router.route("/:id").get(Protect, getCoupon)
 .put(Protect, Allowed("admin"), updateCoupon).delete(Protect, Allowed("admin"), deleteCoupon);
 
 module.exports = router
