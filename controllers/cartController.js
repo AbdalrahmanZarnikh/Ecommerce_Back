@@ -21,7 +21,7 @@ const calcTotalCartPrice = (cart) => {
 
 
    const totalPriceAfterDiscount =
-    totalPrice - (totalPrice * couponDiscount) / 100;
+    cart.totalCartPrice - (cart.totalCartPrice * couponDiscount) / 100;
 
   cart.totalPriceAfterDiscount = totalPriceAfterDiscount;
 
