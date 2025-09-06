@@ -6,6 +6,7 @@ const ApiError = require("../utils/ApiError");
 const ProductModel = require("../models/productModel");
 const CouponModel = require("../models/couponModel");
 
+
 const calcTotalCartPrice = (cart) => {
   let totalPrice = 0;
 
@@ -15,12 +16,15 @@ const calcTotalCartPrice = (cart) => {
 
   cart.totalCartPrice = totalPrice;
 
-  if (cart.totalPriceAfterDiscount) {
-    const totalPriceAfterDiscount =
-      totalPrice - (totalPrice * coupon.discount) / 100;
+  
+  const couponDiscount = ((cart.totalCartPrice - cart.totalPriceAfterDiscount) / cart.totalCartPrice) * 100;
 
-    cart.totalPriceAfterDiscount = totalPriceAfterDiscount;
-  }
+
+   const totalPriceAfterDiscount =
+    totalPrice - (totalPrice * couponDiscount) / 100;
+
+  cart.totalPriceAfterDiscount = totalPriceAfterDiscount;
+
 };
 
 exports.AddProductToCart = asyncHandler(async (req, res, next) => {
