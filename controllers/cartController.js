@@ -14,6 +14,13 @@ const calcTotalCartPrice = (cart) => {
   });
 
   cart.totalCartPrice = totalPrice;
+
+  if (cart.totalPriceAfterDiscount) {
+    const totalPriceAfterDiscount =
+      totalPrice - (totalPrice * coupon.discount) / 100;
+
+    cart.totalPriceAfterDiscount = totalPriceAfterDiscount;
+  }
 };
 
 exports.AddProductToCart = asyncHandler(async (req, res, next) => {
@@ -138,14 +145,12 @@ exports.ApplyCoupon = asyncHandler(async (req, res, next) => {
     return next(new ApiError("Coupon Is Invalid Or Expired"));
   }
 
-
   const cart = await CartModel.findOne({ user: req.user._id });
 
   const totalPrice = cart.totalCartPrice;
 
-
- const totalPriceAfterDiscount = totalPrice - (totalPrice * coupon.discount / 100);
-
+  const totalPriceAfterDiscount =
+    totalPrice - (totalPrice * coupon.discount) / 100;
 
   cart.totalPriceAfterDiscount = totalPriceAfterDiscount;
 
