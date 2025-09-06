@@ -6,7 +6,7 @@ const ApiError = require("../utils/ApiError");
 const ProductModel = require("../models/productModel");
 const CouponModel = require("../models/couponModel");
 
-const calcTotalCartPrice = (cart) => {
+const calcTotalCartPrice = async(cart) => {
   let totalPrice = 0;
 
   cart.cartItems.forEach((item) => {
@@ -16,13 +16,15 @@ const calcTotalCartPrice = (cart) => {
   cart.totalCartPrice = totalPrice;
 
   if (cart.totalPriceAfterDiscount) {
-    const couponDiscount =
-      ((cart.totalCartPrice - cart.totalPriceAfterDiscount) /
-        cart.totalCartPrice) *
-      100;
-
+  const coupon = await CouponModel.findOne({
+    expire: { $gt: Date.now() },
+  });
+      
+      console.log(coupon.discount)
     const totalPriceAfterDiscount =
-      cart.totalCartPrice - (cart.totalCartPrice * couponDiscount) / 100;
+      cart.totalCartPrice - (cart.totalCartPrice * coupon.discount) / 100;
+
+      console.log(totalPriceAfterDiscount)
 
     cart.totalPriceAfterDiscount = totalPriceAfterDiscount;
   }
